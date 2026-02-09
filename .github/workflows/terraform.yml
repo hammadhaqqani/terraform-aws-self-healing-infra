@@ -1,0 +1,64 @@
+name: Terraform Validate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  validate:
+    name: Validate Terraform
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.5"
+
+      - name: Terraform Format Check
+        run: terraform fmt -check -recursive
+
+      - name: Terraform Init (Root)
+        run: terraform init -backend=false
+
+      - name: Terraform Validate (Root)
+        run: terraform validate
+
+      - name: Terraform Init (Example)
+        working-directory: examples/complete
+        run: terraform init -backend=false
+
+      - name: Terraform Validate (Example)
+        working-directory: examples/complete
+        run: terraform validate
+
+  lint:
+    name: Lint Python Lambdas
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install linters
+        run: pip install flake8 black
+
+      - name: Run flake8
+        run: flake8 lambdas/ --max-line-length=120 --ignore=E501
+
+      - name: Check formatting with black
+        run: black --check lambdas/

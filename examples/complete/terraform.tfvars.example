@@ -1,0 +1,16 @@
+aws_region  = "us-east-1"
+environment = "production"
+
+# EC2 instances to monitor (add your instance IDs)
+ec2_instance_ids = ["i-0abc123def456", "i-0def789abc012"]
+
+# ECS service to monitor
+ecs_cluster_name = "production-cluster"
+ecs_service_name = "web-api"
+
+# RDS instance to monitor
+rds_instance_id = "prod-database"
+
+# Notification endpoints
+notification_emails = ["devops@example.com"]
+slack_webhook_url   = "https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXX"
