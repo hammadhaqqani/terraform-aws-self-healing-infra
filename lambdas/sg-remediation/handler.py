@@ -147,22 +147,26 @@ def revoke_rule(sg_id, permission, ip_version, cidr):
         if ip_version == "ipv4":
             ec2.revoke_security_group_ingress(
                 GroupId=sg_id,
-                IpPermissions=[{
-                    "IpProtocol": permission["IpProtocol"],
-                    "FromPort": permission.get("FromPort", 0),
-                    "ToPort": permission.get("ToPort", 65535),
-                    "IpRanges": [{"CidrIp": cidr}],
-                }],
+                IpPermissions=[
+                    {
+                        "IpProtocol": permission["IpProtocol"],
+                        "FromPort": permission.get("FromPort", 0),
+                        "ToPort": permission.get("ToPort", 65535),
+                        "IpRanges": [{"CidrIp": cidr}],
+                    }
+                ],
             )
         else:
             ec2.revoke_security_group_ingress(
                 GroupId=sg_id,
-                IpPermissions=[{
-                    "IpProtocol": permission["IpProtocol"],
-                    "FromPort": permission.get("FromPort", 0),
-                    "ToPort": permission.get("ToPort", 65535),
-                    "Ipv6Ranges": [{"CidrIpv6": cidr}],
-                }],
+                IpPermissions=[
+                    {
+                        "IpProtocol": permission["IpProtocol"],
+                        "FromPort": permission.get("FromPort", 0),
+                        "ToPort": permission.get("ToPort", 65535),
+                        "Ipv6Ranges": [{"CidrIpv6": cidr}],
+                    }
+                ],
             )
         logger.info("Revoked %s rule from %s: %s", ip_version, sg_id, cidr)
     except ClientError as e:

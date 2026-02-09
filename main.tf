@@ -26,7 +26,7 @@ terraform {
 module "notifications" {
   source = "./modules/sns-notifications"
 
-  environment        = var.environment
+  environment         = var.environment
   notification_emails = var.notification_emails
   slack_webhook_url   = var.slack_webhook_url
   kms_key_arn         = var.kms_key_arn

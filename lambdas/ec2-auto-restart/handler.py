@@ -82,13 +82,19 @@ def remediate_instance(instance_id):
         response = ec2.describe_instances(InstanceIds=[instance_id])
         reservations = response.get("Reservations", [])
         if not reservations or not reservations[0].get("Instances"):
-            return {"instance_id": instance_id, "status": "error", "message": "Instance not found"}
+            return {
+                "instance_id": instance_id,
+                "status": "error",
+                "message": "Instance not found",
+            }
 
         instance = reservations[0]["Instances"][0]
         state = instance["State"]["Name"]
         instance_name = get_instance_name(instance)
 
-        logger.info("Instance %s (%s) current state: %s", instance_id, instance_name, state)
+        logger.info(
+            "Instance %s (%s) current state: %s", instance_id, instance_name, state
+        )
 
         if state == "running":
             # Instance is running but failing checks -- reboot it
@@ -104,7 +110,9 @@ def remediate_instance(instance_id):
         else:
             msg = f"Instance {instance_id} in unrecoverable state: {state}"
             logger.warning(msg)
-            send_notification(instance_id, instance_name, "MANUAL_INTERVENTION_NEEDED", msg)
+            send_notification(
+                instance_id, instance_name, "MANUAL_INTERVENTION_NEEDED", msg
+            )
             return {"instance_id": instance_id, "status": "manual", "message": msg}
 
     except ClientError as e:
@@ -131,7 +139,9 @@ def start_instance(instance_id, instance_name):
     # Wait for running state
     waiter = ec2.get_waiter("instance_running")
     try:
-        waiter.wait(InstanceIds=[instance_id], WaiterConfig={"Delay": 5, "MaxAttempts": 12})
+        waiter.wait(
+            InstanceIds=[instance_id], WaiterConfig={"Delay": 5, "MaxAttempts": 12}
+        )
         msg = f"Successfully started instance {instance_id} ({instance_name})"
         logger.info(msg)
         send_notification(instance_id, instance_name, "STARTED", msg)

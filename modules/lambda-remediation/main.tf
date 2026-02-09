@@ -34,9 +34,9 @@ resource "aws_lambda_function" "ec2_restart" {
 
   environment {
     variables = {
-      SNS_TOPIC_ARN  = var.sns_topic_arn
-      ENVIRONMENT    = var.environment
-      INSTANCE_IDS   = join(",", var.ec2_instance_ids)
+      SNS_TOPIC_ARN = var.sns_topic_arn
+      ENVIRONMENT   = var.environment
+      INSTANCE_IDS  = join(",", var.ec2_instance_ids)
     }
   }
 

@@ -74,7 +74,10 @@ def remediate_rds(db_instance_id):
         instances = response.get("DBInstances", [])
 
         if not instances:
-            return {"statusCode": 404, "body": f"RDS instance {db_instance_id} not found"}
+            return {
+                "statusCode": 404,
+                "body": f"RDS instance {db_instance_id} not found",
+            }
 
         instance = instances[0]
         status = instance.get("DBInstanceStatus", "unknown")

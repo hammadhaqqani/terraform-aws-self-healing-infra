@@ -85,7 +85,10 @@ def remediate_service(cluster, service):
 
         logger.info(
             "Service %s: status=%s, desired=%d, running=%d",
-            service, status, desired, running,
+            service,
+            status,
+            desired,
+            running,
         )
 
         if running >= desired:
