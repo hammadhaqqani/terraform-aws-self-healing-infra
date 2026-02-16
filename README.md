@@ -1,5 +1,7 @@
 # Terraform AWS Self-Healing Infrastructure
 
+[![Terraform](https://github.com/hammadhaqqani/terraform-aws-self-healing-infra/actions/workflows/terraform.yml/badge.svg)](https://github.com/hammadhaqqani/terraform-aws-self-healing-infra/actions/workflows/terraform.yml)
+[![GitHub Pages](https://github.com/hammadhaqqani/terraform-aws-self-healing-infra/actions/workflows/pages.yml/badge.svg)](https://hammadhaqqani.github.io/terraform-aws-self-healing-infra/)
 [![Terraform](https://img.shields.io/badge/Terraform-1.5+-623CE4?logo=terraform)](https://www.terraform.io/)
 [![AWS](https://img.shields.io/badge/AWS-CloudWatch%20%7C%20Lambda%20%7C%20EventBridge-FF9900?logo=amazonaws)](https://aws.amazon.com/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
